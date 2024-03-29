@@ -2313,6 +2313,26 @@ def rabbitmq(registry, xml_parent, data):
     mapping = [("", "spec", ""), ("token", "remoteBuildToken", None)]
     helpers.convert_mapping_to_xml(rabbitmq, data, mapping, fail_required=True)
 
+def kafka(registry, xml_parent, data):
+    """yaml: kafka
+    This plugin triggers build using remote build message in Kafka toppic.
+
+    Requires the Jenkins :jenkins-plugins:`Kafka Build Trigger Plugin
+    <kafka-build-trigger>`.
+
+    :arg str token: the build token expected in the message queue (required)
+
+    Example:
+
+    .. literalinclude:: /../../tests/triggers/fixtures/rabbitmq.yaml
+       :language: yaml
+
+    """
+
+    kafka_prefix = "io.jenkins.plugins.kafkabuildtrigger."
+    kafka = XML.SubElement(xml_parent, kafka_prefix + "RemoteBuildTrigger")
+    mapping = [("", "spec", ""), ("token", "remoteBuildToken", None)]
+    helpers.convert_mapping_to_xml(kafka, data, mapping, fail_required=True)
 
 def parameterized_timer(parser, xml_parent, data):
     """yaml: parameterized-timer
